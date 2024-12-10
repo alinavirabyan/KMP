@@ -1,38 +1,36 @@
-# Input: Pattern and Text
 pattern = "abc"
 text = "ababcabcabc"
 
-# Step 1: Compute the prefix function
 prefix = [0] * len(pattern)
-j = 0  # Length of the current matching prefix
+j = 0  
 for i in range(1, len(pattern)):
     while j > 0 and pattern[j] != pattern[i]:
-        j = prefix[j - 1]  # Fallback to the previous prefix length
+        j = prefix[j - 1]  
     if pattern[j] == pattern[i]:
         j += 1
-    prefix[i] = j  # Update the prefix function array
+    prefix[i] = j  
 
-# Step 2: Perform KMP search
+
 pattern_length = len(pattern)
 text_length = len(text)
 
-i = 0  # Pointer for text
-j = 0  # Pointer for pattern
+i = 0  
+j = 0 
 found = False
 
 while i < text_length:
     if text[i] == pattern[j]:
         i += 1
         j += 1
-        if j == pattern_length:  # Match found
+        if j == pattern_length:  
             print(f"Pattern found at position {i - pattern_length}")
             found = True
-            j = prefix[j - 1]  # Continue searching for other matches
+            j = prefix[j - 1]
     else:
         if j > 0:
-            j = prefix[j - 1]  # Fallback in pattern
+            j = prefix[j - 1]  
         else:
-            i += 1  # Move in text
+            i += 1  
 
 if not found:
     print("Pattern not found")
